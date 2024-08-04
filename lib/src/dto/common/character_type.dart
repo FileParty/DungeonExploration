@@ -49,10 +49,3 @@ enum BuffType {
   heal, // 회복
   stun, // 기절
 }
-
-enum WorldViewType {
-  fantasy, // 판타지
-  cyberpunk, // 사이버펑크
-  martialArts, // 무협
-  common, // 공통
-}

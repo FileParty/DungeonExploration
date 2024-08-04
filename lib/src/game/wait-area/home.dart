@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:gemini_survival/api/gemini.dart';
 import 'package:gemini_survival/src/common/bottom_btns.dart';
+import 'package:gemini_survival/src/game/api/wait_area.dart';
 import 'package:gemini_survival/src/game/wait-area/explore/index.dart';
 import 'package:gemini_survival/src/provider/provider.dart';
 import 'package:provider/provider.dart';
@@ -14,7 +16,7 @@ class GameHome extends StatefulWidget {
 class _GameHomeState extends State<GameHome> {
   double _opacity = 1.0;
   bool _isTransitioning = false;
-  GameState? _nextScreen = GameState.home;
+  GameState? _nextScreen;
 
   Future<void> _setScreen(GameState screen) async {
     setState(() {
@@ -92,8 +94,13 @@ class _GameHomeState extends State<GameHome> {
                 ),
                 ButtonInfo(
                   color: const Color.fromARGB(255, 231, 59, 159),
-                  text: '상점',
-                  callBack: () => _setScreen(GameState.shop),
+                  text: 'API 테스트',
+                  callBack: () async {
+                    final response = await GeminiAPI.callJsonList(exploreMapParam);
+                    print(response);
+                  },
+                    // '상점',
+                  //callBack: () => _setScreen(GameState.shop),
                 ),
                 ButtonInfo(
                   color: const Color.fromARGB(255, 44, 44, 44),

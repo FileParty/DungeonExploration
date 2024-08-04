@@ -1,13 +1,14 @@
-
-
+import 'package:gemini_survival/src/dto/character/action/action.dart';
 import 'package:gemini_survival/src/dto/character/character.dart';
+import 'package:gemini_survival/src/dto/common/map_type.dart';
 
-class Unit extends Character {
+class PlayerUnit extends Character {
 
-  
   int rank = 1; // 유닛 랭크
+  WorldViewType worldViewType;
+  List<PlayerAction> actions = [];
 
-  Unit({
+  PlayerUnit({
     required super.name,
     required super.description,
     required super.maxHp,
@@ -17,5 +18,7 @@ class Unit extends Character {
     required super.maxArmor,
     required super.armorType,
     required this.rank,
+    required this.worldViewType,
+    required this.actions,
   });
 }

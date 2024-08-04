@@ -6,30 +6,34 @@ import 'package:google_generative_ai/google_generative_ai.dart';
 
 class GeminiAPI {
 
-  static Future<Map<String, dynamic>> callAPI(Map<String, dynamic> body) async {
-    // .env 파일에서 API 키 가져오기
-    String apiKey = dotenv.env['API_KEY']!;
+  static Future<List<dynamic>> callJsonList<T>(Map<String, dynamic> body) async {
+    try {
+      // .env 파일에서 API 키 가져오기
+      String apiKey = dotenv.env['GEMINI_API_KEY']!;
 
-    // API 요청 바디 생성
-    String parse = jsonEncode(body);
-    Map<String, dynamic> responseMap = {};
+      // API 호출
+      final model = GenerativeModel(
+        model: 'gemini-1.5-flash',
+        apiKey: apiKey,
+        generationConfig: GenerationConfig(responseMimeType: 'application/json'));
 
-    // API 호출
-    final model = GenerativeModel(
-      model: 'gemini-1.5-flash',
-      apiKey: apiKey,
-      generationConfig: GenerationConfig(responseMimeType: 'application/json'));
-
-    const prompt = 'List a few popular cookie recipes using this JSON schema:\n\n'
-      'Recipe = {"recipeName": string}\n'
-      'Return: Array<Recipe>';
-    final response = await model.generateContent([Content.text(prompt)]);
-
-    if( response.text != null ) {
-      responseMap = jsonDecode(response.text!)['result']; 
+      final response = await model.generateContent([Content.text(jsonEncode(body))]);
+      
+      if( response.text != null ) {
+        List<dynamic> jsonObject = jsonDecode(response.text!.replaceAll('', '').replaceAll('\r', '').replaceAll(RegExp(r'\s+'), ' '));
+        print(jsonObject);
+        // description에서 줄바꿈 및 개행 문자 제거
+        jsonObject = jsonObject.map((item) {
+          item['description'] = item['description'].replaceAll('\n', '').replaceAll('\r', '').replaceAll(RegExp(r'\s+'), ' ');
+          return item;
+        }).toList();
+        return jsonObject;
+      }
+      return [];
+    } catch(e) {
+      print(e);
+      throw Exception('Failed to load post');
     }
-
-    return responseMap;
   }
 
 }

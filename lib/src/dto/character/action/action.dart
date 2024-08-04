@@ -1,15 +1,12 @@
 
 
 import 'package:gemini_survival/src/dto/common/character_type.dart';
+import 'package:gemini_survival/src/dto/common/map_type.dart';
 
 class Action {
-  final String name;
-  final String description;
   final ActionType type;
 
   Action({
-    required this.name,
-    required this.description,
     required this.type,
   });
 
@@ -55,8 +52,6 @@ class ActionTypeDeamge extends Action {
   ActionTypeDeamge({
     required this.deamgeType,
     required this.value,
-    required super.name,
-    required super.description,
     required super.type,
   });
 }
@@ -67,8 +62,6 @@ class ActionTypeHeal extends Action {
 
   ActionTypeHeal({
     required this.value,
-    required super.name,
-    required super.description,
     required super.type,
   });
 }
@@ -81,8 +74,6 @@ class ActionTypeBuff extends Action {
   ActionTypeBuff({
     required this.buffType,
     required this.value,
-    required super.name,
-    required super.description,
     required super.type,
   });
 }

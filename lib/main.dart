@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:gemini_survival/src/common/config.dart';
 import 'package:gemini_survival/src/common/loading.dart';
 import 'package:gemini_survival/src/game/wait-area/home.dart';
@@ -6,7 +7,8 @@ import 'package:gemini_survival/src/provider/provider.dart';
 import 'package:gemini_survival/src/view/home.dart';
 import 'package:provider/provider.dart';
 
-void main() {
+void main() async {
+  await dotenv.load(fileName: "gemini.env");
   runApp(
     ChangeNotifierProvider(
       create: (context) => AppState(),
