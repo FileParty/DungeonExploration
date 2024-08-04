@@ -1,0 +1,36 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Flutter
+      uses: subosito/flutter-action@v1
+      with:
+        flutter-version: '2.2.3'  # 원하는 Flutter 버전을 명시하세요
+
+    - name: Install dependencies
+      run: flutter pub get
+
+    - name: Create .env file in assets directory
+      run: |
+        mkdir -p assets
+        echo "API_KEY=${{ secrets.GEMINI_API_KEY }}" > assets/gemini.env
+
+    - name: Build web
+      run: flutter build web --base-href="/DungeonExploration/"
+
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: build/web
