@@ -1,16 +1,14 @@
 # gemini_survival
 
-A new Flutter project.
+## github page 배포 순서
+- master branch
+flutter build web
+git checkout --orphan gh-pages
+git reset --hard
+git commit --allow-empty -m "Initialize gh-pages branch"
+git push origin gh-pages
+git checkout master
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+git add build/web -f
+git commit -m "Add web build files"
+git subtree push --prefix build/web origin gh-pages
