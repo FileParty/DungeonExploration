@@ -20,11 +20,12 @@ class GeminiAPI {
       final response = await model.generateContent([Content.text(jsonEncode(body))]);
       
       if( response.text != null ) {
-        List<dynamic> jsonObject = jsonDecode(response.text!.replaceAll('', '').replaceAll('\r', '').replaceAll(RegExp(r'\s+'), ' '));
-        print(jsonObject);
+        List<dynamic> jsonObject = jsonDecode(response.text!.toLowerCase());
         // description에서 줄바꿈 및 개행 문자 제거
         jsonObject = jsonObject.map((item) {
-          item['description'] = item['description'].replaceAll('\n', '').replaceAll('\r', '').replaceAll(RegExp(r'\s+'), ' ');
+          item.forEach((key, value) {
+            item[key] = value.toString().replaceAll('\n', '').replaceAll('\r', '').replaceAll(RegExp(r'\s+'), ' ');
+          });
           return item;
         }).toList();
         return jsonObject;

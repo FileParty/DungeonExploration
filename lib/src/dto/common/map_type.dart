@@ -2,7 +2,7 @@
 enum WorldViewType {
   fantasy, // 판타지
   cyberpunk, // 사이버펑크
-  martialArts, // 무협
+  martialarts, // 무협
   common, // 공통
 }
 
@@ -12,8 +12,8 @@ WorldViewType getWorldViewType(String value) {
       return WorldViewType.fantasy;
     case 'cyberpunk':
       return WorldViewType.cyberpunk;
-    case 'martialArts':
-      return WorldViewType.martialArts;
+    case 'martialarts':
+      return WorldViewType.martialarts;
     case 'common':
       return WorldViewType.common;
     default:
@@ -27,9 +27,9 @@ String getWorldViewTypeName(WorldViewType worldViewType) {
       return '판타지';
     case WorldViewType.cyberpunk:
       return '사이버펑크';
-    case WorldViewType.martialArts:
+    case WorldViewType.martialarts:
       return '무협';
-    case WorldViewType.common:
+    default:
       return '없음';
   }
 }
@@ -42,7 +42,7 @@ WorldViewSubType getWorldViewSubType(WorldViewType worldViewType, String value) 
       return WorldViewFantasy.fromString(value);
     case WorldViewType.cyberpunk:
       return WorldViewCyberpunk.fromString(value);
-    case WorldViewType.martialArts:
+    case WorldViewType.martialarts:
       return WorldViewMartialArts.fromString(value);
     default:
       throw Exception('Unknown WorldViewType value: $value');
@@ -55,7 +55,7 @@ String getWorldViewSubTypeName(WorldViewType worldViewType, WorldViewSubType wor
       return WorldViewFantasy.getName(worldViewSubType as WorldViewFantasy);
     case WorldViewType.cyberpunk:
       return WorldViewCyberpunk.getName(worldViewSubType as WorldViewCyberpunk);
-    case WorldViewType.martialArts:
+    case WorldViewType.martialarts:
       return WorldViewMartialArts.getName(worldViewSubType as WorldViewMartialArts);
     default:
       return '';
@@ -87,7 +87,7 @@ class WorldViewFantasy extends WorldViewSubType {
   }
 
   static String getName(WorldViewFantasy worldViewFantasy) {
-    switch (worldViewFantasy.toString()) {
+    switch (worldViewFantasy.value) {
       case 'forest':
         return '숲';
       case 'cave':
@@ -127,7 +127,7 @@ class WorldViewCyberpunk extends WorldViewSubType {
   }
 
   static String getName(WorldViewCyberpunk worldViewCyberpunk) {
-    switch (worldViewCyberpunk.toString()) {
+    switch (worldViewCyberpunk.value) {
       case 'city':
         return '도시';
       case 'factory':
@@ -167,7 +167,7 @@ class WorldViewMartialArts extends WorldViewSubType {
   }
 
   static String getName(WorldViewMartialArts worldViewMartialArts) {
-    switch (worldViewMartialArts.toString()) {
+    switch (worldViewMartialArts.value) {
       case 'forest':
         return '숲';
       case 'temple':

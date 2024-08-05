@@ -37,15 +37,19 @@ class CardGameApp extends StatelessWidget {
                   height: gameHeight,
                   child: Consumer<AppState>(
                     builder: (context, appState, child) {
+                      Widget content;
                       switch (appState.playState) {
-                        case PlayState.loading:
-                          return const LoadingScreen();
                         case PlayState.playing:
-                          return const GameHome();
-                        case PlayState.gameOver:
+                          content = const GameHome();
                         case PlayState.mainMenu:
-                          return const HomeScreen();
+                          content = const HomeScreen();
                       }
+                      return Stack(
+                        children: [
+                          content,
+                          if (appState.isLoading) const LoadingScreen(),
+                        ],
+                      );
                     },
                   ),
                 ),

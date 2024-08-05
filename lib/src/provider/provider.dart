@@ -4,13 +4,15 @@ import 'package:gemini_survival/src/dto/character/unit.dart';
 import 'package:gemini_survival/src/dto/common/character_type.dart';
 import 'package:gemini_survival/src/dto/common/map_type.dart';
 import 'package:gemini_survival/src/dto/map.dart';
+import 'package:gemini_survival/src/dto/select.dart';
 
-enum PlayState { loading, playing, gameOver, mainMenu }
+enum PlayState { playing, mainMenu }
 enum GameState { explore, battle, shop, units, home, exit }
 
 class AppState extends ChangeNotifier {
 
   PlayState _playState = PlayState.mainMenu;
+  bool _isLoading = false;
   GameState _gameState = GameState.home;
   List<MapObject> _maps = [];
   List<PlayerUnit> _units = [
@@ -58,11 +60,14 @@ class AppState extends ChangeNotifier {
       ]
     ),
   ];
+  SelectExplore selectExplore = SelectExplore();
 
   PlayState get playState => _playState;
   GameState get gameState => _gameState;
   List<MapObject> get maps => _maps;
   List<PlayerUnit> get units => _units;
+  SelectExplore get getSelectExplore => selectExplore;
+  bool get isLoading => _isLoading;
 
   void setPalyState(PlayState playState) {
     _playState = playState;
@@ -84,6 +89,21 @@ class AppState extends ChangeNotifier {
 
   void setUnits(List<PlayerUnit> units) {
     _units = units;
+    notifyListeners();
+  }
+
+  void setSelectExploreInMap(MapObject selectMap) {
+    selectExplore.setSelectMap(selectMap);
+    notifyListeners();
+  }
+
+  void setSelectExploreInUnit(PlayerUnit selectUnit) {
+    selectExplore.setSelectUnit(selectUnit);
+    notifyListeners();
+  }
+
+  void toggleLoading() {
+    _isLoading = !_isLoading;
     notifyListeners();
   }
 }

@@ -92,6 +92,11 @@ class MapAiResponse {
       'roomCol': roomCol,
     };
   }
+
+  @override
+  String toString() {
+    return 'MapAiResponse{title: $title, description: $description, worldViewType: $worldViewType, worldViewSubType: $worldViewSubType, roomRow: $roomRow, roomCol: $roomCol}';
+  }
 }
 
 class MapGenerater {
